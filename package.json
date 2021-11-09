@@ -7,6 +7,7 @@
   "devDependencies": {
     "@jsdevtools/chai-exec": "*",
     "chai": "*",
+    "eslint": "^8.2.0",
     "mocha": "*"
   }
 }
