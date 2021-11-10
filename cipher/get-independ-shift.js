@@ -7,5 +7,5 @@ import { ENG_MODULE_ALPHABET } from "./constants.js";
 export const getIndependShift = ({ shift, action }) => {
   const decodeShift = ENG_MODULE_ALPHABET - (shift % ENG_MODULE_ALPHABET);
   const encodeShift = ENG_MODULE_ALPHABET + (shift % ENG_MODULE_ALPHABET);
-  return action === "decode" ? decodeShift : encodeShift;
+  return action === "0" ? decodeShift : encodeShift;
 };
