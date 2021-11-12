@@ -18,6 +18,13 @@ import { parseCommands } from "./parse-commnads.js";
  * (e.g. because of permissions or it is a directory) - human-friendly error should be printed in stderr.
  *
  */
+
+/**
+ * @returns {Object} CLIReturn
+ * @returns {String} CLIReturn.command - The Command like C0-A-R1
+ * @returns {File || process.stdin} CLIReturn.input - The input file or stdin
+ * @returns {File || process.stdout} CLIReturn.output - The output file or stdout
+ */
 export const cliParser = (process) => {
   const [, , ...argv] = process.argv;
   if (!argv) {
