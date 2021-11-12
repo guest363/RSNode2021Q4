@@ -10,7 +10,7 @@ export const testCommands = (command) => {
   const cipherSymbol = command[0].toLowerCase();
   const cipherParam = command[1];
 
-  if (isCurrectCipherType()) {
+  if (isCurrectCipherType(cipherSymbol)) {
     errorAction(
       "Invalid command options, set current cipher type. \n C - for Caesar, \n A - for Atbash, \n R - for ROT-8"
     );

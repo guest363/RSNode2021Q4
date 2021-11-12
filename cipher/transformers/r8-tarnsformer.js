@@ -1,6 +1,6 @@
-import { transformer } from "../../io-reader/transformer";
-import { getIndependShift } from "../get-independ-shift";
-import { shifter } from "../shifter";
+import { transformer } from "../../io-reader/transformer.js";
+import { getIndependShift } from "../get-independ-shift.js";
+import { shifter } from "../shifter.js";
 
 export const r8Transformer = (action) => (source) => {
   const independentShift = getIndependShift({

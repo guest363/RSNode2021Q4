@@ -1,8 +1,10 @@
+import { transformerSelector } from "./cipher/transformers/transformer-selector.js";
 import { cliParser } from "./cli/cli-parser.js";
 import { ioReader } from "./io-reader/io-reader.js";
 
 const cliParams = cliParser(process);
-const commands = cliParams.commands;
+const commands = cliParams.command;
+console.log(cliParams);
 
 const readStream = ioReader({ param: cliParams.input, rwType: "read" });
 const writeStream = ioReader({ param: cliParams.output, rwType: "write" });
@@ -12,7 +14,7 @@ const writeStream = ioReader({ param: cliParams.output, rwType: "write" });
  * Теперь к нему можно сколь угодно много
  * стакать потоков через метод .pipe()
  */
-let currentPipe = readStream();
+let currentPipe = readStream;
 /**
  * Накидываем потоки шифрования
  */
