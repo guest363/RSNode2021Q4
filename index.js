@@ -1,29 +1,29 @@
-import { pipeline } from "stream";
-import { getIndependShift } from "./cipher/get-independ-shift.js";
-import { shifter } from "./cipher/shifter.js";
 import { cliParser } from "./cli/cli-parser.js";
 import { ioReader } from "./io-reader/io-reader.js";
-import { transformer } from "./io-reader/transformer.js";
 
 const cliParams = cliParser(process);
-
+const commands = cliParams.commands;
 
 const readStream = ioReader({ param: cliParams.input, rwType: "read" });
 const writeStream = ioReader({ param: cliParams.output, rwType: "write" });
 
-const runPipe = async () => {
-  await pipeline(
-    readStream, // input file stream or stdin stream
-    transformer(cipher),
-    writeStream, // output file stream or stdout stream
-    (err) => {
-      if (err) {
-        console.error(`Failed to execute commands ${cliParams.command}`, err);
-      } else {
-        console.log(`File success execute commands ${cliParams.command}`);
-      }
-    }
-  );
-};
+/**
+ * Инициализируем потом чтения.
+ * Теперь к нему можно сколь угодно много
+ * стакать потоков через метод .pipe()
+ */
+let currentPipe = readStream();
+/**
+ * Накидываем потоки шифрования
+ */
+for await (const command of commands) {
+  const cipherType = command[0];
+  const cipherAction = command[1];
+  const cipherPipe = transformerSelector[cipherType](cipherAction);
 
-runPipe();
+  currentPipe = currentPipe.pipe(cipherPipe);
+}
+/**
+ * В завершении пишем все это дело в writeStream
+ */
+currentPipe.pipe(writeStream);

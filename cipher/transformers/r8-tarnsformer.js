@@ -2,9 +2,9 @@ import { transformer } from "../../io-reader/transformer";
 import { getIndependShift } from "../get-independ-shift";
 import { shifter } from "../shifter";
 
-export const caesarTransformer = (action) => (source) => {
+export const r8Transformer = (action) => (source) => {
   const independentShift = getIndependShift({
-    shiftType: "c",
+    shiftType: "r",
     action,
   });
 
