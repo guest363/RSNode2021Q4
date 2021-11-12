@@ -16,7 +16,7 @@ export const parseArgv = (argv, template) => {
     const nextValue = argv[i + 1];
     if (params.some((param) => param === value)) {
       if (nextValue[0] === "-") {
-        errorAction(`Wrong CLI param ${value}`);
+        errorAction(`After param "${value}" can't be "${nextValue}"`);
       }
       if (tupls.get(value) !== void 0) {
         errorAction(`Dublicate CLI param ${value}`);

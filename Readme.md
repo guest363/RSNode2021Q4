@@ -1,84 +1,48 @@
-
-
-
-
-
-
-# Task. Ciphering CLI Tool
-
-## Implement CLI tool that will encode and decode a text by 3 substitution ciphers:
-* [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher)
-* [Atbash cipher](https://en.wikipedia.org/wiki/Atbash)
-* [ROT-8 as variation of ROT-13](https://en.wikipedia.org/wiki/ROT13)
-
-CLI tool should accept 3 options (short alias and full name):
-
-1.  **-c, --config**: config for ciphers
-Config is a string with pattern `{XY(-)}n`, where:
-  * `X` is a cipher mark:
-    * `C` is for Caesar cipher (with shift 1)
-    * `A` is for Atbash cipher
-    * `R` is for ROT-8 cipher
-  * `Y` is flag of encoding or decoding (mandatory for Caesar cipher and ROT-8 cipher and should not be passed Atbash cipher)
-    * `1` is for encoding
-    * `0` is for decoding
-2.  **-i, --input**: a path to input file
-3.  **-o, --output**: a path to output file
-
-For example, config `"C1-C1-R0-A"` means "encode by Caesar cipher => encode by Caesar cipher => decode by ROT-8 => use Atbash"
-
-## Details:
-
-1. The task must be solved using only **pure Node.js**. Any libraries and packages (except `nodemon`, `prettier` and its plugins, `eslint` and its plugins) **are prohibited**.
-2. `Config` option is required and should be validated. In case of invalid confing **human-friendly** error should be printed in `stderr` and the process should exit with non-zero status code.
-3. If any option is duplicated (i.e. `bash $ node my_ciphering_cli -c C1-C1-A-R0 -c C0`) then **human-friendly** error should be printed in `stderr` and the process should exit with non-zero status code.
-4. If the input file option is missed - use `stdin` as an input source.
-5. If the output file option is missed - use `stdout` as an output destination.
-6. If the input and/or output file is given but doesn't exist or you can't access it (e.g. because of permissions or it's a directory) - **human-friendly** error should be printed in `stderr` and the process should exit with non-zero status code.
-7. If passed params are fine the output (file or `stdout`) should contain transformed content of input (file or `stdin`).
-8. For encoding/decoding **use only the English alphabet**, all other characters should be kept untouched.
-9. Using `streams` for reading, writing and transformation of text **is mandatory**.
-10. Each cipher is implemented in the form of a **transform stream**.
-11. Streams are piped inside each other according to `config` (you can use `.pipe` streams instances method or `pipeline`)
-
-**Usage example:**  
-
+# Запуск
+## Шаг 1
+Склонировать репозиториий:
 ```bash
-$ node my_ciphering_cli -c "C1-C1-R0-A" -i "./input.txt" -o "./output.txt"
+git clone https://github.com/guest363/RSNode2021Q4.git ./
 ```
-
-> input.txt
-> `This is secret. Message about "_" symbol!`
-
-> output.txt
-> `Myxn xn nbdobm. Tbnnfzb ferlm "_" nhteru!`
-
+## Шаг 2
+Попробовать протестировать в ручном режиме, автоматические тесты под запретом, насколько я понял из кроссчека :(
 ```bash
-$ node my_ciphering_cli -c "C1-C0-A-R1-R0-A-R0-R0-C1-A" -i "./input.txt" -o "./output.txt"
+node ./index.js
 ```
+Поддержка параметров:
+- -c, -C a command like "C1-C1-R0-A"
+- -i, -I an input file
+- -o, -O an output file
 
-> input.txt
-> `This is secret. Message about "_" symbol!`
 
-> output.txt
-> `Vhgw gw wkmxkv. Ckwwoik onauv "_" wqcnad!`
+# Степень реализации задач
+## Базовая реализация
 
-```bash
-$ node my_ciphering_cli -c "A-A-A-R1-R0-R0-R0-C1-C1-A" -i "./input.txt" -o "./output.txt"
-```
+1. В `README.md` должно быть описано, как можно запустить программу из командной строки, описаны аргументы, которые можно передать приложению **плюс 10 баллов**.
+2. Если переданы все аргументы и они корректны, приложение читает из файла и записывает в файл преобразованный текст, при этом предыдущие записи не удаляются **плюс 20 баллов**
+3. Приложение работает в соответствии с описанными в задании примерами **плюс 30 баллов**
+4. Если аргументы `input` и/или `output` ведут к несуществующему файлу либо директории,приложение передает соответствующее сообщение в `process.stderr` и прoцесс завершается с кодом, отличным от 0 **плюс 10 баллов**
+5. Если любой из аргументов дублируется, приложение передает соответствующее сообщение в `process.stderr` и прoцесс завершается с кодом, отличным от 0 **плюс 10 баллов**
+6. Если `config` невалиден или отсутствует, приложение передает соответствующее сообщение в `process.stderr` и прoцесс завершается с кодом, отличным от 0 **плюс 20 баллов**.
+Объем валидации `config`:
+    * проверяется, что `config` имеет формат `{XY(-)}n`
+    * проверяется, что `X` соответствует одному из шифров
+    * проверяется, что для ROT-8 и Цезаря присутствует элемент `Y`
+    * проверяется, что для Атбаш отсутствует элемент `Y`
+    * проверяется, что `Y` — это 1 или 0
+7. Если не передан аргумент с путем до файла на чтение, то чтение осуществляется из `process.stdin` **плюс 10 баллов**
+8. Если не передан аргумент с путем до файла на запись, то вывод осуществляется в `process.stdout` **плюс 10 баллов**
+9. Шифруются/дешифруются только латинские буквы, регистр сохраняется, остальные символы не изменяются **плюс 20 баллов**
+10. Если текст вводится из консоли, то программа не должна завершаться после выполнения шифровки/дешифровки введенного текста, т.е. должна быть возможность ввести еще текст **плюс 10 баллов**
+11. Кодовая база не находится в одном файле, а разделена на файлы в соответствии с выполняемыми задачами (например - функция, преобразующая строку, в отдельном файле, код, создающий transform стрим, в отдельном файле, функция для парсинга и валидации аргументов в отдельном файле и т.п.) **плюс 10 баллов**
 
-> input.txt
-> `This is secret. Message about "_" symbol!`
+## Продвинутая реализация
+1. Чтение реализовано при помощи кастомного стрима (класс, отнаследованный от Readable) **плюс 10 баллов**
+2. Запись реализована при помощи кастомного стрима (класс, отнаследованный от Writable) **плюс 10 баллов**
+3. Для передачи сообщения в `process.stderr` используются `пользовательские ошибки` и их обработка **плюс 10 баллов**
 
-> output.txt
-> `Hvwg wg gsqfsh. Asggous opcih "_" gmapcz!`
 
-```bash
-$ node my_ciphering_cli -c "C1-R1-C0-C0-A-R0-R1-R1-A-C1" -i "./input.txt" -o "./output.txt"
-```
 
-> input.txt
-> `This is secret. Message about "_" symbol!`
-
-> output.txt
-> `This is secret. Message about "_" symbol!`
+### Icons 
+- Task done ✔️
+- Not implement ❌

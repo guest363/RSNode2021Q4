@@ -9,14 +9,15 @@ export const testCommands = (command) => {
   const secondSymbol = command[1];
 
   if (cipherTypes.indexOf(firstSymbol) === -1) {
-    errorAction("Invalid command options");
+    errorAction(
+      "Invalid command options, set current cipher type. \n C - for Caesar, \n A - for Atbash, \n R - for ROT-8"
+    );
   }
-  if (firstSymbol === "a" && secondSymbol !== void 0) {
-    errorAction("Atbash cipher has no second param");
-  } else if (
-    firstSymbol !== "a" &&
-    (secondSymbol !== "1" || secondSymbol !== "2")
-  ) {
+  if (firstSymbol === "a") {
+    if (secondSymbol !== void 0) {
+      errorAction("Atbash cipher has no second param");
+    }
+  } else if (secondSymbol !== "0" || secondSymbol !== "1") {
     errorAction("No encode/decode param");
   }
 };

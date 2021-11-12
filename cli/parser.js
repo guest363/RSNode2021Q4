@@ -28,12 +28,14 @@ export const cliParser = (process) => {
    */
   const parseTemplate = { input: "-i", output: "-o", command: "-c" };
   const parsedArgvMap = parseArgv(argv, parseTemplate);
+
   const command = parsedArgvMap.get("-c");
-  if (command === void 0) {
-    errorAction("No cipher command");
-  }
   const input = parsedArgvMap.get("-i");
   const output = parsedArgvMap.get("-o");
+
+  if (command === void 0) {
+    errorAction(`No cipher command "-c" specifyed`);
+  }
   const isSomeIOFile = typeof input === "string" || typeof output === "string";
 
   if (isSomeIOFile && input === output) {
@@ -45,5 +47,6 @@ export const cliParser = (process) => {
     input: input || process.stdin,
     output: output || process.stdout,
   };
+
   return parcedCliOpt;
 };

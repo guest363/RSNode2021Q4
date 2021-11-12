@@ -5,6 +5,9 @@ import { testCommands } from "./test-commands.js";
  */
 export const parseCommands = (commands) => {
   const splitedCommandsArray = commands.split("-");
+
+  /** Протестировать на корректность заданной команды */
   splitedCommandsArray.forEach(testCommands);
+
   return splitedCommandsArray;
 };
