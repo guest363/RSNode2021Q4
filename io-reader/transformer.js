@@ -12,5 +12,5 @@ export const transformer = (fn) =>
       yield fn(chunk);
     }
     /** Перенос строки после того как дописали в файл */
-    yield "\n";
+    /* yield "\n"; */
   };
