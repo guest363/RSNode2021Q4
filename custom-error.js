@@ -13,6 +13,6 @@ export class customError extends Error {
     super(message);
     this.name = "Custom error";
     this.code = code;
-    this.fullMessage = errorCodes[code] + message;
+    this.fullMessage = errorCodes[code] + (message || '');
   }
 }
