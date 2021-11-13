@@ -8,6 +8,6 @@ export const ENG_MODULE_ALPHABET = 26;
 export const SHIFT_TYPES = {
   c: 1,
   /** Так как в английском четное колличество букв проблем нет */
-  a: ENG_MODULE_ALPHABET - 1,
+  a: ENG_MODULE_ALPHABET,
   r: 8,
 };

@@ -7,6 +7,6 @@ export const atbashTransformer = () => (source) => {
     shiftType: "a",
   });
 
-  const cipher = shifter(independentShift);
+  const cipher = shifter(independentShift, "a");
   return transformer(cipher)(source);
 };

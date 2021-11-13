@@ -9,7 +9,7 @@ const isUpper = (char) => {
 /**
  * Осуществляет сдвиг
  */
-export const shifter = (shift) => (letters) => {
+export const shifter = (shift, cipherType) => (letters) => {
   const output = [];
   for (let letter of letters) {
     /**
@@ -30,7 +30,13 @@ export const shifter = (shift) => (letters) => {
       : alphabetObject[letter];
 
     /** Индекс уже зашифрованной буквы */
-    const newPosition = Math.abs(startPosition + shift) % ENG_MODULE_ALPHABET;
+    const newPosition =
+      /**
+       * Для шифра Атбаш нужен другой алгоритм смещения
+       */
+      cipherType === "a"
+        ? (ENG_MODULE_ALPHABET - 1 - startPosition) % ENG_MODULE_ALPHABET
+        : Math.abs(startPosition + shift) % ENG_MODULE_ALPHABET;
     /**
      * Смещение может быть сколь угодно большим и должно сдвигать
      * учивая колличество букв английского алфавита
