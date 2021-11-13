@@ -1,4 +1,4 @@
-import { errorAction } from "../error-action.js";
+import { customError } from "../custom-error.js";
 import { isCurrectCipherType } from "./is-currect-cipher-type.js";
 import { isCurrectCipherParam } from "./is-current-cipher-param.js";
 
@@ -11,15 +11,13 @@ export const testCommands = (command) => {
   const cipherParam = command[1];
 
   if (isCurrectCipherType(cipherSymbol)) {
-    errorAction(
-      "Invalid command options, set current cipher type. \n C - for Caesar, \n A - for Atbash, \n R - for ROT-8"
-    );
+    throw new customError(301);
   }
   if (cipherSymbol === "a") {
     if (cipherParam) {
-      errorAction("Atbash cipher has no second param");
+      throw new customError(302);
     }
   } else if (isCurrectCipherParam(cipherParam)) {
-    errorAction("No encode/decode param");
+    throw new customError(303);
   }
 };

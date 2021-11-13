@@ -1,4 +1,4 @@
-import { errorAction } from "../error-action.js";
+import { customError } from "../custom-error.js";
 import { parseArgv } from "./parse-argv.js";
 import { parseCommands } from "./parse-commnads.js";
 
@@ -28,7 +28,7 @@ import { parseCommands } from "./parse-commnads.js";
 export const cliParser = (process) => {
   const [, , ...argv] = process.argv;
   if (!argv) {
-    errorAction("Not specify required option -c");
+    throw new customError(101);
   }
   /**
    * Какие параметры нам важны
@@ -41,12 +41,12 @@ export const cliParser = (process) => {
   const output = parsedArgvMap.get("-o");
 
   if (command === void 0) {
-    errorAction(`No cipher command "-c" specifyed`);
+    throw new customError(102);
   }
   const isSomeIOFile = typeof input === "string" || typeof output === "string";
 
   if (isSomeIOFile && input === output) {
-    errorAction("The output and input file must not be the same");
+    throw new customError(103);
   }
 
   const parcedCliOpt = {
