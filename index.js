@@ -32,20 +32,15 @@ let currentPipe = readStream;
 /**
  * Накидываем потоки шифрования
  */
-for await (const command of commands) {
+for (const command of commands) {
   const cipherType = command[0];
   const cipherAction = command[1];
   const cipherTransformer = transformerSelector[cipherType](cipherAction);
-
-  currentPipe = await pipeline(currentPipe, cipherTransformer, pipeCb());
+  currentPipe = pipeline(currentPipe, cipherTransformer, pipeCb());
 }
 
 /* Add \n */
-currentPipe = await pipeline(
-  currentPipe,
-  addNewLineTransformer,
-  pipeCb("ciphering")
-);
+currentPipe = pipeline(currentPipe, addNewLineTransformer, pipeCb("ciphering"));
 /**
  * В завершении пишем все это дело в writeStream
  */
