@@ -10,6 +10,9 @@ export const parseArgv = (argv, template) => {
    */
   const tupls = new Map();
   let i = 0;
+  if (argv.length === 0) {
+    throw new CustomError(201, `Need params`);
+  }
 
   for (; i < argv.length; ) {
     const value = argv[i].toLowerCase();
@@ -21,11 +24,11 @@ export const parseArgv = (argv, template) => {
       if (nextValue[0] === "-") {
         throw new CustomError(
           201,
-          `After param "${value}" can't be "${nextValue}"`
+          `After param "-" cant't be new param "-" without arguments`
         );
       }
       if (tupls.get(value) !== void 0) {
-        throw new CustomError(201, `Dublicate CLI param ${value}`);
+        throw new CustomError(201, `Dublicate CLI param`);
       }
       tupls.set(value, nextValue);
       i += 2;

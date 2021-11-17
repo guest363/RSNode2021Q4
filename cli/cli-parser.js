@@ -1,7 +1,10 @@
 import { CustomError } from "../custom-error.js";
 import { parseArgv } from "./parse-argv.js";
 import { parseCommands } from "./parse-commnads.js";
-
+/**
+ * Какие параметры нам важны
+ */
+export const parseTemplate = { input: "-i", output: "-o", command: "-c" };
 /**
  * Если задан параметр как в короткой нотации, -а, так и в
  * длинной, --action, длянная нотация приоритетнее.
@@ -34,10 +37,7 @@ export const cliParser = (process) => {
   if (!argv[0]) {
     throw new CustomError(101);
   }
-  /**
-   * Какие параметры нам важны
-   */
-  const parseTemplate = { input: "-i", output: "-o", command: "-c" };
+
   const parsedArgvMap = parseArgv(argv, parseTemplate);
 
   const command = parsedArgvMap.get("-c");
