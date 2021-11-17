@@ -1,4 +1,4 @@
-import { customError } from "../custom-error.js";
+import { CustomError } from "../custom-error.js";
 import { isCurrectCipherType } from "./is-currect-cipher-type.js";
 import { isCurrectCipherParam } from "./is-current-cipher-param.js";
 
@@ -7,17 +7,17 @@ import { isCurrectCipherParam } from "./is-current-cipher-param.js";
  * В случае ошибки завершает приложение
  */
 export const testCommands = (command) => {
-  const cipherSymbol = command[0].toLowerCase();
+  const cipherSymbol = command[0]?.toLowerCase();
   const cipherParam = command[1];
 
   if (isCurrectCipherType(cipherSymbol)) {
-    throw new customError(301);
+    throw new CustomError(301);
   }
   if (cipherSymbol === "a") {
     if (cipherParam) {
-      throw new customError(302);
+      throw new CustomError(302);
     }
   } else if (isCurrectCipherParam(cipherParam)) {
-    throw new customError(303);
+    throw new CustomError(303);
   }
 };

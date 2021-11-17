@@ -1,4 +1,4 @@
-import { customError } from "../custom-error.js";
+import { CustomError } from "../custom-error.js";
 import { parseArgv } from "./parse-argv.js";
 import { parseCommands } from "./parse-commnads.js";
 
@@ -32,7 +32,7 @@ export const cliParser = (process) => {
    * смотрим его 0 эллемент
    */
   if (!argv[0]) {
-    throw new customError(101);
+    throw new CustomError(101);
   }
   /**
    * Какие параметры нам важны
@@ -45,12 +45,12 @@ export const cliParser = (process) => {
   const output = parsedArgvMap.get("-o");
 
   if (command === void 0) {
-    throw new customError(102);
+    throw new CustomError(102);
   }
   const isSomeIOFile = typeof input === "string" || typeof output === "string";
 
   if (isSomeIOFile && input === output) {
-    throw new customError(103);
+    throw new CustomError(103);
   }
 
   const parcedCliOpt = {

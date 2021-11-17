@@ -8,7 +8,7 @@ const errorCodes = {
   303: "No encode/decode param",
   401: "FS error. ",
 };
-export class customError extends Error {
+export class CustomError extends Error {
   constructor(code, message) {
     super(message);
     this.name = "Custom error";
