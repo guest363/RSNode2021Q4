@@ -2,12 +2,10 @@
   "type": "module",
   "author": "Oleg Moiseev",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha ./tests/*.js --timeout 5000"
+    "test": "jest"
   },
   "devDependencies": {
-    "@jsdevtools/chai-exec": "*",
-    "chai": "*",
     "eslint": "^8.2.0",
-    "mocha": "*"
+    "jest": "^27.3.1"
   }
 }
