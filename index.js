@@ -52,5 +52,5 @@ try {
   currentPipe.pipe(writeStream);
 } catch (error) {
   process.stderr.write(error.fullMessage);
-  process.exit(1);
+  process.exit(error.code || 1);
 }

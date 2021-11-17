@@ -27,7 +27,11 @@ import { parseCommands } from "./parse-commnads.js";
  */
 export const cliParser = (process) => {
   const [, , ...argv] = process.argv;
-  if (!argv) {
+  /**
+   * argv всегда будет Array
+   * смотрим его 0 эллемент
+   */
+  if (!argv[0]) {
     throw new customError(101);
   }
   /**
