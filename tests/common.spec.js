@@ -1,4 +1,5 @@
 import { describe, test } from "@jest/globals";
+
 const script = `../index.js`;
 /*   const spy = jest.spyOn(console, "log");
       expect(spy.mock.calls).toEqual([["Testing..."]]); */
