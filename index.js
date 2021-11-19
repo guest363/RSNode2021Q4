@@ -2,7 +2,7 @@ import { pipeline } from "stream";
 import { addNewLineTransformer } from "./add-new-line-transformer.js";
 import { transformerSelector } from "./cipher/transformers/transformer-selector.js";
 import { cliParser } from "./cli/cli-parser.js";
-import { customError } from "./custom-error.js";
+import { CustomError } from "./custom-error.js";
 import { ioReader } from "./io-reader/io-reader.js";
 
 try {
@@ -18,7 +18,7 @@ try {
    */
   const pipeCb = (action) => (err) => {
     if (err) {
-      throw new customError(`Failed ${action}`, 100);
+      throw new CustomError(`Failed ${action}`, 100);
     } else {
       action ? console.log(`Success execute ${action}`) : "";
     }

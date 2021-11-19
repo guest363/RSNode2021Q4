@@ -1,5 +1,5 @@
 import fs from "fs";
-import { customError } from "../custom-error.js";
+import { CustomError } from "../custom-error.js";
 
 /**
  * Создает поток чтения\записи в файл
@@ -20,10 +20,10 @@ export const fileReader = ({ param, rwType }) => {
      */
     try {
       if (!fs.existsSync(param)) {
-        throw new customError(401, errorMessages["ENOENT"]);
+        throw new CustomError(401, errorMessages["ENOENT"]);
       }
     } catch (err) {
-      throw new customError(401, "Error to access file");
+      throw new CustomError(401, "Error to access file");
     }
 
     const returndStream =
@@ -32,8 +32,8 @@ export const fileReader = ({ param, rwType }) => {
         : fs.createWriteStream(param, { encoding: "utf-8", flags: "a" });
 
     returndStream.on("error", (error) => {
-      const customError = errorMessages[error.code] || error.message;
-      throw new customError(401, customError);
+      const CustomError = errorMessages[error.code] || error.message;
+      throw new CustomError(401, CustomError);
     });
 
     return returndStream;

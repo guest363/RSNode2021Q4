@@ -4,7 +4,11 @@ import { parseCommands } from "./parse-commnads.js";
 /**
  * Какие параметры нам важны
  */
-export const parseTemplate = { input: "-i", output: "-o", command: "-c" };
+export const parseTemplate = {
+  input: ["-i", "--input"],
+  output: ["-o", "--output"],
+  command: ["-c", "--config"],
+};
 /**
  * Если задан параметр как в короткой нотации, -а, так и в
  * длинной, --action, длянная нотация приоритетнее.

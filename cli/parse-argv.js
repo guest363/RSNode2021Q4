@@ -17,7 +17,7 @@ export const parseArgv = (argv, template) => {
   for (; i < argv.length; ) {
     const value = argv[i].toLowerCase();
     const nextValue = argv[i + 1];
-    if (params.some((param) => param === value)) {
+    if (params.some((paramSet) => paramSet.some((param) => param === value))) {
       if (!nextValue) {
         throw new CustomError(201, `Need arguments to param`);
       }
