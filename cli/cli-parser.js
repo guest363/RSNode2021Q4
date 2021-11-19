@@ -7,13 +7,13 @@ import { parseCommands } from "./parse-commnads.js";
 export const parseTemplate = {
   input: ["-i", "--input"],
   output: ["-o", "--output"],
-  command: ["-c", "--config"],
+  config: ["-c", "--config"],
 };
 /**
  * Если задан параметр как в короткой нотации, -а, так и в
  * длинной, --action, длянная нотация приоритетнее.
  *
- * -c, --command: -`C` is for Caesar cipher (with shift 1), `A` is for Atbash cipher, `R` is for ROT-8 cipher
+ * -c, --config: -`C` is for Caesar cipher (with shift 1), `A` is for Atbash cipher, `R` is for ROT-8 cipher
  *                -`1` is for encoding, `0` is for decoding
  * -i, --input: an input file
  * -o, --output: an output file
@@ -44,9 +44,10 @@ export const cliParser = (process) => {
 
   const parsedArgvMap = parseArgv(argv, parseTemplate);
 
-  const command = parsedArgvMap.get("-c");
-  const input = parsedArgvMap.get("-i");
-  const output = parsedArgvMap.get("-o");
+  const command = parsedArgvMap.get("config");
+
+  const input = parsedArgvMap.get("input");
+  const output = parsedArgvMap.get("output");
 
   if (command === void 0) {
     throw new CustomError(102);

@@ -6,14 +6,14 @@ import { parseArgv } from "../parse-argv.js";
 describe("Проверка парсинга аргументов", () => {
   test("-c A ✔️", async () => {
     const expectMap = new Map();
-    expectMap.set("-c", "A");
+    expectMap.set("config", "A");
     expect(parseArgv(["-c", "A"], parseTemplate)).toStrictEqual(expectMap);
   });
 
   test("-c A-C0 -i ./text.txt ✔️", async () => {
     const expectMap = new Map();
-    expectMap.set("-c", "A-C0");
-    expectMap.set("-i", "./text.txt");
+    expectMap.set("config", "A-C0");
+    expectMap.set("input", "./text.txt");
     expect(
       parseArgv(["-c", "A-C0", "-i", "./text.txt"], parseTemplate)
     ).toStrictEqual(expectMap);
@@ -45,7 +45,7 @@ describe("Проверка парсинга аргументов", () => {
   });
   test("-d -c A ✔️ Ignore unknown options", async () => {
     const expectMap = new Map();
-    expectMap.set("-c", "A");
+    expectMap.set("config", "A");
 
     expect(parseArgv(["-d", "-c", "A"], parseTemplate)).toStrictEqual(
       expectMap

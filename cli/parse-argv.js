@@ -4,7 +4,7 @@ import { CustomError } from "../custom-error.js";
  * принятыми в шаблоне
  */
 export const parseArgv = (argv, template) => {
-  const params = Object.values(template);
+  const params = Object.entries(template);
   /**
    * param:value
    */
@@ -16,8 +16,19 @@ export const parseArgv = (argv, template) => {
 
   for (; i < argv.length; ) {
     const value = argv[i].toLowerCase();
+    let paramName = "";
     const nextValue = argv[i + 1];
-    if (params.some((paramSet) => paramSet.some((param) => param === value))) {
+    if (
+      params.some(([templateKey, paramSet]) =>
+        paramSet.some((param) => {
+          if (param === value) {
+            paramName = templateKey;
+            return true;
+          }
+          return false;
+        })
+      )
+    ) {
       if (!nextValue) {
         throw new CustomError(201, `Need arguments to param`);
       }
@@ -27,10 +38,10 @@ export const parseArgv = (argv, template) => {
           `After param "-" cant't be new param "-" without arguments`
         );
       }
-      if (tupls.get(value) !== void 0) {
+      if (tupls.get(paramName) !== void 0) {
         throw new CustomError(201, `Dublicate CLI param`);
       }
-      tupls.set(value, nextValue);
+      tupls.set(paramName, nextValue);
       i += 2;
     } else {
       i += 1;
