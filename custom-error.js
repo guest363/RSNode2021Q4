@@ -1,4 +1,4 @@
-const errorCodes = {
+export const errorCodes = {
   101: "Not specify arguments",
   102: `No cipher command "-c" specifyed`,
   103: "The output and input file must not be the same",

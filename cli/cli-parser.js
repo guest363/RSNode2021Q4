@@ -10,8 +10,7 @@ export const parseTemplate = {
   config: ["-c", "--config"],
 };
 /**
- * Если задан параметр как в короткой нотации, -а, так и в
- * длинной, --action, длянная нотация приоритетнее.
+ * Парсит аргументы process
  *
  * -c, --config: -`C` is for Caesar cipher (with shift 1), `A` is for Atbash cipher, `R` is for ROT-8 cipher
  *                -`1` is for encoding, `0` is for decoding
