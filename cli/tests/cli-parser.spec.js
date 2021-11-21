@@ -6,8 +6,7 @@ beforeEach(() => {
   process.argv.length = 2;
 });
 
-describe(`Проверка работы функции cliParser. 
-Мокаем process.stderr и process.exit`, () => {
+describe(`Проверка работы функции cliParser.`, () => {
   test("Сommand ['-c', 'A-A'] ✔️", async () => {
     const mockExit = jest
       .spyOn(process, "exit")
@@ -24,12 +23,30 @@ describe(`Проверка работы функции cliParser.
   });
 
   test("Если нет никаких аргументов ❌", async () => {
-    const mockExit = jest
-      .spyOn(process, "exit")
-      .mockImplementationOnce((error) => error);
-
     expect(() => cliParser(process)).toThrow(new CustomError(101));
+  });
 
-    expect(mockExit).toHaveBeenCalledWith(101);
+  test("Если дублируются параметры ❌", async () => {
+    process.argv.push(...["-c", "A", "-c", "C0"]);
+    expect(() => cliParser(process)).toThrow(
+      new CustomError(201, `Dublicate CLI param`)
+    );
+  });
+
+  test("Если -с нет параметра ❌", async () => {
+    process.argv.push(...["-c"]);
+    expect(() => cliParser(process)).toThrow(
+      new CustomError(201, `Need arguments to param`)
+    );
+  });
+
+  test("Если -i and -o equal ❌", async () => {
+    process.argv.push(...["-c", "A", "-i", "text.txt", "--output", "text.txt"]);
+    expect(() => cliParser(process)).toThrow(new CustomError(103));
+  });
+  
+  test("Если нет опции -c ❌", async () => {
+    process.argv.push(...["-i", "textI.txt", "--output", "textO.txt"]);
+    expect(() => cliParser(process)).toThrow(new CustomError(102));
   });
 });
