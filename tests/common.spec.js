@@ -6,7 +6,7 @@ const script = `../index.js`;
 
 describe("Проверка CLI", () => {
   describe("Проверка парсинга cli параметров", () => {
-    test("Ошибка если нет параметра command", async () => {
+    test("Ошибка если нет параметра command", () => {
       jest.spyOn(process, "exit").mockImplementationOnce(() => {
         throw new Error("process.exit() was called.");
       });

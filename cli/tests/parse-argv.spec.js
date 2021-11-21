@@ -4,13 +4,13 @@ import { parseTemplate } from "../cli-parser.js";
 import { parseArgv } from "../parse-argv.js";
 
 describe("Проверка парсинга аргументов", () => {
-  test("-c A ✔️", async () => {
+  test("-c A ✔️", () => {
     const expectMap = new Map();
     expectMap.set("config", "A");
     expect(parseArgv(["-c", "A"], parseTemplate)).toStrictEqual(expectMap);
   });
 
-  test("-c A-C0 -i ./text.txt ✔️", async () => {
+  test("-c A-C0 -i ./text.txt ✔️", () => {
     const expectMap = new Map();
     expectMap.set("config", "A-C0");
     expectMap.set("input", "./text.txt");
@@ -19,18 +19,18 @@ describe("Проверка парсинга аргументов", () => {
     ).toStrictEqual(expectMap);
   });
 
-  test("❌", async () => {
+  test("❌", () => {
     expect(() => parseArgv([], parseTemplate)).toThrow(
       new CustomError(201, `Need params`)
     );
   });
 
-  test("-c ❌", async () => {
+  test("-c ❌", () => {
     expect(() => parseArgv(["-c"], parseTemplate)).toThrow(
       new CustomError(201, `Need arguments to param`)
     );
   });
-  test("-c -i ❌", async () => {
+  test("-c -i ❌", () => {
     expect(() => parseArgv(["-c", "-i"], parseTemplate)).toThrow(
       new CustomError(
         201,
@@ -38,12 +38,12 @@ describe("Проверка парсинга аргументов", () => {
       )
     );
   });
-  test("-c A -c A ❌", async () => {
+  test("-c A -c A ❌", () => {
     expect(() => parseArgv(["-c", "A", "-c", "A"], parseTemplate)).toThrow(
       new CustomError(201, `Dublicate CLI param`)
     );
   });
-  test("-d -c A ✔️ Ignore unknown options", async () => {
+  test("-d -c A ✔️ Ignore unknown options", () => {
     const expectMap = new Map();
     expectMap.set("config", "A");
 
